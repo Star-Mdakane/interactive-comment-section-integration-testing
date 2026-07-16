@@ -12,17 +12,8 @@ const Comment = ({ comment }) => {
 
     return (
         <>
-            <div className='bg-white rounded-lg p-4'>
-                <div className='flex md:flex-col'>
-                    <button>
-                        <FaPlus />
-                    </button>
-                    <p>{comment.score}</p>
-                    <button>
-                        <FaMinus />
-                    </button>
-                </div>
-                <div className='flex'>
+            <div className='bg-white rounded-lg p-4 grid gap-4 md:gap-x-6 grid-cols-2 md:grid-cols-[40px_1fr_1fr]'>
+                <div className='w-full flex col-span-full md:row-start-1 md:col-start-2 md:col-span-1'>
                     <Image
                         src={image}
                         alt="avatar"
@@ -31,10 +22,19 @@ const Comment = ({ comment }) => {
                     <p>{username}</p>
                     <p>{comment.createdAt}</p>
                 </div>
-                <p>
+                <p className='col-span-full md:col-start-2 md:col-span-2'>
                     {comment.content}
                 </p>
-                <div className='flex'>
+                <div className='flex items-center justify-around px-3 md:py-3 bg-bg rounded-[10px] h-10 w-25 md:w-10 md:h-25 md:flex-col md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-3'>
+                    <button className='cursor-pointer w-full h-full flex justify-center items-center'>
+                        <FaPlus className='text-[10px] text-[#C5C6EF]' />
+                    </button>
+                    <p className='text-pri text-[16px] leading-[150%] tracking-normal font-medium'>{comment.score}</p>
+                    <button className='cursor-pointer w-full h-full flex justify-center items-center'>
+                        <FaMinus className='text-[10px] text-[#C5C6EF]' />
+                    </button>
+                </div>
+                <div className='flex justify-self-end md:row-start-1'>
                     <FaReply />
                     <span>Reply</span>
                 </div>
