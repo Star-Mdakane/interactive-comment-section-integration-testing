@@ -54,7 +54,9 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 1. The planning has taken a lot from me, not knowing how to start. The sstructure of the json file complicates things quite a bit with main user seperated from the comments but I can see how I could have used that if I had auth but still it is the blue print container of the entire comment section.
 2. For now I will just build a stati site which will look like the the given one then I will see if I will do the functionality on it first or if I will connecct to db first then work on the funtionality.
 - So far I am loadng static data but I will see if it wll not give me problems when I fetch it from db (async and fetch will be my goto)
-
+3. So i designed the forms for the comment and reply
+- The design was not as simple as it looks and still needs tweaking
+- I also have trouble on where to put the forms but I have decided that they will go on every element just hidden whereby I was making it a a sibling of the component instead as a child of individual component
 
 ### Built with
 
