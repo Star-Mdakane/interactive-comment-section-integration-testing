@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import Reply from './Reply';
 import { FaMinus, FaPlus, FaReply } from 'react-icons/fa';
 import Image from 'next/image';
@@ -11,7 +13,15 @@ const Comment = ({ comment, user }) => {
     const replies = comment.replies;
     const image = comment.user?.image?.png;
     const username = comment.user.username;
-    console.log(comment);
+    // console.log(comment);
+
+    const [replyInput, setReplyInput] = useState(false)
+
+    const onReply = () => {
+        console.log('reply btn clicked');
+        setReplyInput(!replyInput)
+    }
+
 
     return (
         <>
@@ -38,12 +48,14 @@ const Comment = ({ comment, user }) => {
                             <FaMinus className='text-[10px] text-[#C5C6EF]' />
                         </button>
                     </div>
-                    <button className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
+                    <button
+                        onClick={onReply}
+                        className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
                         <FaReply className='text-[14px]' />
                         <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Reply</span>
                     </button>
                 </div>
-                <CommentForm btnLabel="reply" user={user} />
+                {replyInput && <CommentForm btnLabel="reply" user={user} />}
             </div>
 
             {replies.map(reply => (

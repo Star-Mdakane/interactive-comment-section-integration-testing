@@ -1,10 +1,8 @@
 import Image from 'next/image'
-import React from 'react'
 
 const CommentForm = ({ user, btnLabel }) => {
 
-    const image = user.user?.image?.png || user.image?.png;;
-
+    const image = user.user?.image?.png || user.image?.png;
 
     return (
         <form className='min-h-36 bg-white grid grid-cols-2 md:grid-cols-[32px_1fr_104px] gap-4 rounded-lg p-4'>

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React from 'react'
+import React, { useState } from 'react'
 import { FaMinus, FaPlus, FaReply } from 'react-icons/fa';
 import ReplyForm from "@/components/ReplyForm";
 
@@ -8,6 +8,14 @@ const Reply = ({ reply, user }) => {
 
     const image = reply.user?.image?.png;
     const username = reply.user.username;
+
+    const [replyInput, setReplyInput] = useState(false)
+
+    const onReply = () => {
+        console.log('reply btn clicked');
+        setReplyInput(!replyInput)
+    }
+
 
     return (
         <>
@@ -39,13 +47,15 @@ const Reply = ({ reply, user }) => {
                                 <FaMinus className='text-[10px] text-[#C5C6EF]' />
                             </button>
                         </div>
-                        <button className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
+                        <button
+                            onClick={onReply}
+                            className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
                             <FaReply className='text-[14px]' />
                             <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Reply</span>
                         </button>
                     </div>
                 </div>
-                <ReplyForm btnLabel="reply" user={user} />
+                {replyInput && <ReplyForm btnLabel="reply" user={user} />}
             </div>
         </>
     )
