@@ -5,7 +5,7 @@ import Reply from './Reply';
 import { FaMinus, FaPlus, FaReply } from 'react-icons/fa';
 import Image from 'next/image';
 import CommentForm from './CommentForm';
-import ReplyForm from "@/components/ReplyForm";
+// import ReplyForm from "@/components/ReplyForm";
 
 
 const Comment = ({ comment, user }) => {
@@ -18,7 +18,6 @@ const Comment = ({ comment, user }) => {
     const [replyInput, setReplyInput] = useState(false)
 
     const onReply = () => {
-        console.log('reply btn clicked');
         setReplyInput(!replyInput)
     }
 
@@ -55,7 +54,7 @@ const Comment = ({ comment, user }) => {
                         <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Reply</span>
                     </button>
                 </div>
-                {replyInput && <CommentForm btnLabel="reply" user={user} />}
+                {replyInput && <CommentForm btnLabel="reply" user={user} username={username} />}
             </div>
 
             {replies.map(reply => (

@@ -8,7 +8,7 @@ export default function Home() {
   const currentUser = post.currentUser;
   const userName = currentUser.username;
   const comments = post.comments;
-  console.log(comments);
+  // console.log(comments);
 
   const replies = () => {
 

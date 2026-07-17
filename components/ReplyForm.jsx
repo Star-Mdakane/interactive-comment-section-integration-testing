@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
-const CommentForm = ({ user, btnLabel }) => {
+const CommentForm = ({ user, btnLabel, reply }) => {
 
     const image = user.user?.image?.png || user.image?.png;
 
@@ -13,6 +13,7 @@ const CommentForm = ({ user, btnLabel }) => {
                     <textarea name="text" rows={3} id=""
                         className='w-full h-full px-4 py-2 focus:outline-text'
                         placeholder='Add reply...'
+                        defaultValue={`@${reply.user.username}`}
                     >
 
                     </textarea>

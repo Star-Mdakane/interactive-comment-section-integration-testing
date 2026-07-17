@@ -1,8 +1,13 @@
-import Image from 'next/image'
 
-const CommentForm = ({ user, btnLabel }) => {
+import Image from 'next/image'
+import React from 'react'
+
+
+const CommentForm = ({ user, btnLabel, username }) => {
 
     const image = user.user?.image?.png || user.image?.png;
+
+    // console.log(comment);
 
     return (
         <form className='min-h-36 bg-white grid grid-cols-2 md:grid-cols-[32px_1fr_104px] gap-4 rounded-lg p-4'>
@@ -10,6 +15,8 @@ const CommentForm = ({ user, btnLabel }) => {
                 <textarea name="text" rows={3} id=""
                     className='w-full h-full px-4 py-2 focus:outline-text'
                     placeholder='Add a comment...'
+                    defaultValue={username ? `@${username}` : ''}
+
                 >
 
                 </textarea>

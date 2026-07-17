@@ -19,7 +19,7 @@ export const CommentsProvider = ({ children }) => {
         setPost(data)
     }, [])
 
-    console.log(post.comments);
+    // console.log(post.comments);
 
     const value = {}
 

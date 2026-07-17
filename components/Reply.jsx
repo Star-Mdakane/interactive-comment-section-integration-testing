@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image';
 import React, { useState } from 'react'
 import { FaMinus, FaPlus, FaReply } from 'react-icons/fa';
@@ -34,7 +36,7 @@ const Reply = ({ reply, user }) => {
                         </div>
                         <p className='col-span-full md:col-start-2 md:col-span-2text-[16px] leading-[150%] tracking-normal font-normal'>
                             <span className='text-pri text-[16px] leading-[150%] tracking-normal font-medium'>
-                                @{reply.replyingTo} &nbsp;
+                                @{reply.replyingTo}{" "}
                             </span>
                             {reply.content}
                         </p>
@@ -55,7 +57,7 @@ const Reply = ({ reply, user }) => {
                         </button>
                     </div>
                 </div>
-                {replyInput && <ReplyForm btnLabel="reply" user={user} />}
+                {replyInput && <ReplyForm btnLabel="reply" user={user} reply={reply} />}
             </div>
         </>
     )
