@@ -1,18 +1,17 @@
+// 'use client'
+
 import Comment from "@/components/Comment";
 import CommentForm from "@/components/CommentForm";
-import ReplyForm from "@/components/ReplyForm";
-import post from "@/public/data.json"
+// import ReplyForm from "@/components/ReplyForm";
+import post from '@/public/data.json'
 
 export default function Home() {
+
 
   const currentUser = post.currentUser;
   const userName = currentUser.username;
   const comments = post.comments;
-  // console.log(comments);
-
-  const replies = () => {
-
-  }
+  console.log(userName);
 
   return (
 

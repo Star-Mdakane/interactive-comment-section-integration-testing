@@ -19,9 +19,14 @@ export const CommentsProvider = ({ children }) => {
         setPost(data)
     }, [])
 
-    // console.log(post.comments);
+    const currentUser = post.currentUser;
+    const comments = post.comments;
+//   const userName = currentUser.username;
+// const 
 
-    const value = {}
+    console.log(comments);
+
+    const value = {post, currentUser, comments}
 
     return (
         <CommentsContext.Provider value={value}>

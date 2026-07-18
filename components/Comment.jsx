@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react'
 import Reply from './Reply';
-import { FaMinus, FaPlus, FaReply } from 'react-icons/fa';
+import { FaMinus, FaPlus, FaReply, FaTrash } from 'react-icons/fa';
 import Image from 'next/image';
 import CommentForm from './CommentForm';
+import { PiPencilSimpleFill } from 'react-icons/pi';
 // import ReplyForm from "@/components/ReplyForm";
 
 
@@ -33,6 +34,7 @@ const Comment = ({ comment, user }) => {
                             width={32}
                             height={32} />
                         <p className='text-[16px] text-text-bold leading-[150%] tracking-normal font-medium'>{username}</p>
+                        {/* <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p> */}
                         <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{comment.createdAt}</p>
                     </div>
                     <p className='col-span-full md:col-start-2 md:col-span-2 text-[16px] leading-[150%] tracking-normal font-normal'>
@@ -47,12 +49,24 @@ const Comment = ({ comment, user }) => {
                             <FaMinus className='text-[10px] text-[#C5C6EF]' />
                         </button>
                     </div>
-                    <button
-                        onClick={onReply}
-                        className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
-                        <FaReply className='text-[14px]' />
-                        <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Reply</span>
-                    </button>
+                    <div className='justify-self-end md:row-start-1 flex items-center'>
+                        {/* <div className='flex items-center gap-6'>
+                            <button className='text-pri-red flex justify-self-end md:row-start-1 items-center gap-2 cursor-pointer'>
+                                <FaTrash className='text-[14px]' />
+                                <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Delete</span>
+                            </button>
+                            <button className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
+                                <PiPencilSimpleFill className='text-[14px]' />
+                                <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Edit</span>
+                            </button>
+                        </div> */}
+                        <button
+                            onClick={onReply}
+                            className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
+                            <FaReply className='text-[14px]' />
+                            <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Reply</span>
+                        </button>
+                    </div>
                 </div>
                 {replyInput && <CommentForm btnLabel="reply" user={user} username={username} />}
             </div>
