@@ -1,16 +1,29 @@
 'use client'
 
 import Image from 'next/image';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaMinus, FaPlus, FaReply, FaTrash } from 'react-icons/fa';
 import ReplyForm from "@/components/ReplyForm";
 import { PiPencilSimpleFill } from 'react-icons/pi';
+import { formatDistanceToNow } from 'date-fns';
+
 
 
 const Reply = ({ reply, user }) => {
 
     const image = reply.user?.image?.png;
-    const username = reply.user.username;
+    console.log(reply);
+    const username = reply?.user.username;
+    const currentUser = user.username === username;
+
+    const [timeFormat, setTimeFormat] = useState("")
+
+    // const date = currentUser ? timeFormat : reply.createdAt
+
+    useEffect(() => {
+        setTimeFormat(formatDistanceToNow(new Date(Date.now()), { addSuffix: true }))
+    }, [])
+
 
     const [replyInput, setReplyInput] = useState(false)
 
@@ -25,7 +38,7 @@ const Reply = ({ reply, user }) => {
             <div className='flex flex-col mb-4'>
                 <div className='h-full md:h-42 flex md:gap-10'>
                     <div className='hidden h-full md:block md:ml-10 w-1 bg-[#E9EBF0]'></div>
-                    <div className='bg-white md:h-38 rounded-lg p-4 grid gap-4 md:gap-x-6 grid-cols-2 md:grid-cols-[40px_minmax(300px,1fr)_1fr]'>
+                    <div className='bg-white md:h-38 rounded-lg p-4 grid gap-4 md:gap-x-6 grid-cols-2 md:grid-cols-[40px_3fr_1fr]'>
                         <div className='w-full flex col-span-full md:row-start-1 md:col-start-2 md:col-span-1 gap-4 items-center'>
                             <Image
                                 src={image}
@@ -33,8 +46,9 @@ const Reply = ({ reply, user }) => {
                                 width={32}
                                 height={32} />
                             <p className='text-[16px] text-text-bold leading-[150%] tracking-normal font-medium'>{username}</p>
-                            {/* <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p> */}
-                            <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{reply.createdAt}</p>
+                            {currentUser && <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p>}
+
+                            <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{timeFormat}</p>
                         </div>
                         <p className='col-span-full md:col-start-2 md:col-span-2text-[16px] leading-[150%] tracking-normal font-normal'>
                             <span className='text-pri text-[16px] leading-[150%] tracking-normal font-medium'>
@@ -52,22 +66,23 @@ const Reply = ({ reply, user }) => {
                             </button>
                         </div>
                         <div className='justify-self-end md:row-start-1 flex items-center'>
-                            {/* <div className='flex items-center gap-6'>
-                                <button className='text-pri-red flex justify-self-end md:row-start-1 items-center gap-2 cursor-pointer'>
-                                    <FaTrash className='text-[14px]' />
-                                    <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Delete</span>
-                                </button>
-                                <button className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
-                                    <PiPencilSimpleFill className='text-[14px]' />
-                                    <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Edit</span>
-                                </button>
-                            </div> */}
-                            <button
-                                onClick={onReply}
-                                className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
-                                <FaReply className='text-[14px]' />
-                                <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Reply</span>
-                            </button>
+                            {currentUser ?
+                                (<div className='flex items-center gap-6'>
+                                    <button className='text-pri-red flex justify-self-end md:row-start-1 items-center gap-2 cursor-pointer'>
+                                        <FaTrash className='text-[14px]' />
+                                        <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Delete</span>
+                                    </button>
+                                    <button className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
+                                        <PiPencilSimpleFill className='text-[14px]' />
+                                        <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Edit</span>
+                                    </button>
+                                </div>)
+                                : (<button
+                                    onClick={onReply}
+                                    className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
+                                    <FaReply className='text-[14px]' />
+                                    <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Reply</span>
+                                </button>)}
                         </div>
 
                     </div>

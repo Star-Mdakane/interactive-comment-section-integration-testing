@@ -11,7 +11,7 @@ const CommentForm = ({ user, btnLabel, reply }) => {
             <form className='w-full bg-white grid grid-cols-2 md:grid-cols-[32px_1fr_104px] gap-4 rounded-lg p-4'>
                 <div className='col-start-1 col-end-3 md:col-start-2 row-start-1'>
                     <textarea name="text" rows={3} id=""
-                        className='w-full h-full px-4 py-2 focus:outline-text'
+                        className='w-full h-full px-4 py-2 focus:outline-text cursor-pointer'
                         placeholder='Add reply...'
                         defaultValue={`@${reply.user.username}`}
                     >

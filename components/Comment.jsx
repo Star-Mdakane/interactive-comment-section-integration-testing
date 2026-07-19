@@ -1,20 +1,31 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Reply from './Reply';
 import { FaMinus, FaPlus, FaReply, FaTrash } from 'react-icons/fa';
 import Image from 'next/image';
 import CommentForm from './CommentForm';
 import { PiPencilSimpleFill } from 'react-icons/pi';
+import { formatDistanceToNow } from 'date-fns';
 // import ReplyForm from "@/components/ReplyForm";
 
 
-const Comment = ({ comment, user }) => {
+const Comment = ({ comment, user, replies }) => {
 
-    const replies = comment.replies;
     const image = comment.user?.image?.png;
     const username = comment.user.username;
-    // console.log(comment);
+    const currentUser = user.username === username;
+
+    const [timeFormat, setTimeFormat] = useState("")
+
+    // const date = currentUser ? timeFormat : comment.createdAt
+
+    useEffect(() => {
+        setTimeFormat(formatDistanceToNow(new Date(Date.now()), { addSuffix: true }))
+    }, [])
+
+
+    console.log(username);
 
     const [replyInput, setReplyInput] = useState(false)
 
@@ -22,11 +33,10 @@ const Comment = ({ comment, user }) => {
         setReplyInput(!replyInput)
     }
 
-
     return (
         <>
             <div className='flex flex-col gap-6 mb-6'>
-                <div className='bg-white rounded-lg p-4 grid gap-4 md:gap-x-6 grid-cols-2 md:grid-cols-[40px_1fr_1fr]'>
+                <div className='bg-white rounded-lg p-4 grid gap-4 md:gap-x-6 grid-cols-2 md:grid-cols-[40px_3fr_1fr]'>
                     <div className='w-full flex col-span-full md:row-start-1 md:col-start-2 md:col-span-1 gap-4 items-center'>
                         <Image
                             src={image}
@@ -34,8 +44,8 @@ const Comment = ({ comment, user }) => {
                             width={32}
                             height={32} />
                         <p className='text-[16px] text-text-bold leading-[150%] tracking-normal font-medium'>{username}</p>
-                        {/* <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p> */}
-                        <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{comment.createdAt}</p>
+                        {currentUser && <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p>}
+                        <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{timeFormat}</p>
                     </div>
                     <p className='col-span-full md:col-start-2 md:col-span-2 text-[16px] leading-[150%] tracking-normal font-normal'>
                         {comment.content}
@@ -50,34 +60,32 @@ const Comment = ({ comment, user }) => {
                         </button>
                     </div>
                     <div className='justify-self-end md:row-start-1 flex items-center'>
-                        {/* <div className='flex items-center gap-6'>
-                            <button className='text-pri-red flex justify-self-end md:row-start-1 items-center gap-2 cursor-pointer'>
-                                <FaTrash className='text-[14px]' />
-                                <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Delete</span>
-                            </button>
-                            <button className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
-                                <PiPencilSimpleFill className='text-[14px]' />
-                                <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Edit</span>
-                            </button>
-                        </div> */}
-                        <button
-                            onClick={onReply}
-                            className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
-                            <FaReply className='text-[14px]' />
-                            <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Reply</span>
-                        </button>
+                        {currentUser ?
+                            (<div className='flex items-center gap-6'>
+                                <button className='text-pri-red flex justify-self-end md:row-start-1 items-center gap-2 cursor-pointer'>
+                                    <FaTrash className='text-[14px]' />
+                                    <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Delete</span>
+                                </button>
+                                <button className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
+                                    <PiPencilSimpleFill className='text-[14px]' />
+                                    <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Edit</span>
+                                </button>
+                            </div>)
+                            :
+                            (<button
+                                onClick={onReply}
+                                className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
+                                <FaReply className='text-[14px]' />
+                                <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Reply</span>
+                            </button>)}
                     </div>
                 </div>
                 {replyInput && <CommentForm btnLabel="reply" user={user} username={username} />}
             </div>
 
             {replies.map(reply => (
-                <div key={reply.id} >
-                    <Reply reply={reply} user={user} />
-                </div>
+                <Reply key={reply.id} reply={reply} user={user} />
             ))}
-            {/* <CommentForm btnLabel="reply" user={comment} /> */}
-            {/* <ReplyForm btnLabel="reply" user={comment} /> */}
 
         </>
 

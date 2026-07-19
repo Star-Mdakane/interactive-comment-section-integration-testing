@@ -13,20 +13,30 @@ export const useComments = () => {
 
 export const CommentsProvider = ({ children }) => {
 
-    const [post, setPost] = useState({})
+    const [post, setPost] = useState(data)
 
-    useEffect(() => {
-        setPost(data)
-    }, [])
+    const comments = post.comments ?? []
+    const getReplies = (comments) => {
+        return comments.map(comment => comment.replies) || [];
+    }
+    const currentUser = post.currentUser ?? {}
 
-    const currentUser = post.currentUser;
-    const comments = post.comments;
-//   const userName = currentUser.username;
-// const 
+    const createComment = (text) => {
+        const newComment = {
+            context: text,
+            createdAt: new Date(),
+            id: Math.floor(Math.random() * 100 + 4),
+            score: 5,
+            user: {
+                image: {},
+                username: ""
+            },
+        }
+    }
 
-    console.log(comments);
+    // console.log(replies);
 
-    const value = {post, currentUser, comments}
+    const value = { setPost, currentUser, comments, getReplies }
 
     return (
         <CommentsContext.Provider value={value}>
