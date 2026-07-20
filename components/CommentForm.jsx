@@ -1,10 +1,9 @@
-
 'use client'
 
 import { useComments } from '@/context/CommentsContext';
 import Image from 'next/image'
 import React from 'react'
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch, Watch } from 'react-hook-form';
 
 
 const CommentForm = ({ user, btnLabel, username }) => {
@@ -12,8 +11,26 @@ const CommentForm = ({ user, btnLabel, username }) => {
     const { setPost } = useComments()
 
     const image = user.user?.image?.png || user.image?.png;
+    // const emptyField = data.text;
+    // console.log(emptyField);
 
-    const { register, handleSubmit, resetField } = useForm()
+    const { register, handleSubmit, resetField, control } = useForm({
+        defaultValues:
+        {
+            text: `@${username}`
+        }
+    })
+
+    const field = useWatch({
+        control,
+        name: 'text',
+        defaultValue: ''
+    })
+
+    const emptyField = field.trim() === ''
+
+    // console.log(emptyField);
+
     // console.log(comment);
     const onSubmit = (data) => {
         console.log(data);
@@ -51,7 +68,7 @@ const CommentForm = ({ user, btnLabel, username }) => {
                 <textarea name="text" rows={3} id=""
                     className='w-full h-full px-4 py-2 focus:outline-text cursor-pointer'
                     placeholder='Add a comment...'
-                    defaultValue={`@${username}`}
+                    // defaultValue={`@${username}`}
                     {...register('text')}
                 >
 
@@ -65,7 +82,9 @@ const CommentForm = ({ user, btnLabel, username }) => {
                     height={32} />
                 <p className='text-[16px] text-text-bold leading-[150%] tracking-normal font-medium'></p>
             </div>
-            <button className='w-26 h-12  items-center justify-center rounded-lg justify-self-end text-[16px] leading-[150%] tracking-normal font-medium bg-pri hover:bg-pri/50 text-white uppercase cursor-pointer'>
+            <button
+                disabled={emptyField}
+                className='w-26 h-12  items-center justify-center rounded-lg justify-self-end text-[16px] leading-[150%] tracking-normal font-medium bg-pri hover:bg-pri/50 text-white uppercase cursor-pointer'>
                 {btnLabel}
             </button>
         </form>

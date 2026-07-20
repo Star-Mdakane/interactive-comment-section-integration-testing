@@ -7,6 +7,7 @@ import Image from 'next/image';
 import CommentForm from './CommentForm';
 import { PiPencilSimpleFill } from 'react-icons/pi';
 import { formatDistanceToNow } from 'date-fns';
+import VoteContainer from './VoteContainer';
 // import ReplyForm from "@/components/ReplyForm";
 
 
@@ -25,7 +26,7 @@ const Comment = ({ comment, user, replies }) => {
     }, [])
 
 
-    console.log(username);
+    // console.log(username);
 
     const [replyInput, setReplyInput] = useState(false)
 
@@ -45,12 +46,12 @@ const Comment = ({ comment, user, replies }) => {
                             height={32} />
                         <p className='text-[16px] text-text-bold leading-[150%] tracking-normal font-medium'>{username}</p>
                         {currentUser && <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p>}
-                        <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{timeFormat}</p>
+                        <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{currentUser ? timeFormat : comment.createdAt}</p>
                     </div>
                     <p className='col-span-full md:col-start-2 md:col-span-2 text-[16px] leading-[150%] tracking-normal font-normal'>
                         {comment.content}
                     </p>
-                    <div className='flex items-center justify-around px-2 md:py-2 bg-bg rounded-[10px] h-10 w-25 md:w-10 md:h-25 md:flex-col md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-3'>
+                    {/* <div className='flex items-center justify-around px-2 md:py-2 bg-bg rounded-[10px] h-10 w-25 md:w-10 md:h-25 md:flex-col md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-3'>
                         <button className='cursor-pointer w-full h-full flex justify-center items-center'>
                             <FaPlus className='text-[10px] text-[#C5C6EF]' />
                         </button>
@@ -58,7 +59,8 @@ const Comment = ({ comment, user, replies }) => {
                         <button className='cursor-pointer w-full h-full flex justify-center items-center'>
                             <FaMinus className='text-[10px] text-[#C5C6EF]' />
                         </button>
-                    </div>
+                    </div> */}
+                    <VoteContainer score={comment.score} />
                     <div className='justify-self-end md:row-start-1 flex items-center'>
                         {currentUser ?
                             (<div className='flex items-center gap-6'>

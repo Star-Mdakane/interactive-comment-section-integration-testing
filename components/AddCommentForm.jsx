@@ -4,7 +4,7 @@
 import { useComments } from '@/context/CommentsContext';
 import Image from 'next/image'
 import React from 'react'
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 
 
 const CommentForm = ({ user, btnLabel, username }) => {
@@ -13,7 +13,15 @@ const CommentForm = ({ user, btnLabel, username }) => {
 
     const image = user.user?.image?.png || user.image?.png;
 
-    const { register, handleSubmit, resetField } = useForm()
+    const { register, handleSubmit, resetField, control } = useForm()
+
+    const field = useWatch({
+        control,
+        name: 'text',
+        defaultValue: ''
+    })
+
+    const emptyFied = field.trim() === ''
     // console.log(comment);
     const onSubmit = (data) => {
         console.log(data);
@@ -65,7 +73,9 @@ const CommentForm = ({ user, btnLabel, username }) => {
                     height={32} />
                 <p className='text-[16px] text-text-bold leading-[150%] tracking-normal font-medium'></p>
             </div>
-            <button className='w-26 h-12  items-center justify-center rounded-lg justify-self-end text-[16px] leading-[150%] tracking-normal font-medium bg-pri hover:bg-pri/50 text-white uppercase cursor-pointer'>
+            <button
+                disabled={emptyFied}
+                className='w-26 h-12  items-center justify-center rounded-lg justify-self-end text-[16px] leading-[150%] tracking-normal font-medium bg-pri hover:bg-pri/50 text-white uppercase cursor-pointer'>
                 {btnLabel}
             </button>
         </form>

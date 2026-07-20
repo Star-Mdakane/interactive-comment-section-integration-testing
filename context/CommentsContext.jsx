@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import data from '@/public/data.json'
 
 export const CommentsContext = createContext();
@@ -16,12 +16,10 @@ export const CommentsProvider = ({ children }) => {
     const [post, setPost] = useState(data)
 
     const comments = post.comments ?? []
-    const getReplies = (comments) => {
-        return comments.map(comment => comment.replies) || [];
-    }
+
     const currentUser = post.currentUser ?? {}
 
-    const createComment = (text) => {
+    const addComment = (text) => {
         const newComment = {
             context: text,
             createdAt: new Date(),
@@ -34,7 +32,7 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
-    const createReply = () => {
+    const addReply = () => {
         const newReply = {
             content: text,
             createdAt: new Date(),
@@ -51,9 +49,15 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
-    // console.log(replies);
+    const editComment = (userId, text) => {
 
-    const value = { setPost, currentUser, comments, getReplies }
+    }
+
+    const deleteComment = (userId) => {
+
+    }
+
+    const value = { setPost, currentUser, comments, }
 
     return (
         <CommentsContext.Provider value={value}>
