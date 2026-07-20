@@ -49,15 +49,105 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
-    const editComment = (userId, text) => {
+    const editComment = (id, text) => {
 
     }
 
-    const deleteComment = (userId) => {
-
+    const deleteComment = (id) => {
+        setPost(prev => ({
+            ...prev,
+            comments: prev.comments.filter(comment =>
+                comment.id !== id
+            )
+        })
+        )
     }
 
-    const value = { setPost, currentUser, comments, }
+    const deleteReply = (id) => {
+        setPost(prev => ({
+            ...prev,
+            comments: prev.comments.map(comment => ({
+                ...comment,
+                replies: comment.replies.filter(reply => reply.id !== id)
+            })
+            ),
+        })
+        )
+    }
+
+    const commentCount = (type, id) => {
+
+        if (type === 'inc') {
+            setPost(prev => ({
+                ...prev,
+                comments: prev.comments.map(comment =>
+                    comment.id === id ?
+                        {
+                            ...comment,
+                            score: comment.score + 1
+                        }
+                        :
+                        comment
+
+                )
+            })
+            )
+        } else if (type === 'dec') {
+            setPost(prev => ({
+                ...prev,
+                comments: prev.comments.map(comment =>
+                    comment.id === id ?
+                        {
+                            ...comment,
+                            score: comment.score < 1 ? comment.score : comment.score - 1
+                        } :
+                        comment
+                )
+            })
+            )
+        }
+    }
+
+    const replyCount = (type, id) => {
+        if (type === 'inc') {
+            setPost(prev => ({
+                ...prev,
+                comments: prev.comments.map(comment => ({
+                    ...comment,
+                    replies: comment.replies.map(reply =>
+                        reply.id === id ?
+                            {
+                                ...reply,
+                                score: reply.score + 1
+                            } :
+                            reply
+                    )
+                })
+
+                ),
+            })
+            )
+        } else if (type === 'dec') {
+            setPost(prev => ({
+                ...prev,
+                comments: prev.comments.map(comment => ({
+                    ...comment,
+                    replies: comment.replies.map(reply =>
+                        reply.id === id ?
+                            {
+                                ...reply,
+                                score: reply.score < 1 ? reply.score : reply.score - 1
+                            } :
+                            reply
+                    )
+                })
+                ),
+            })
+            )
+        }
+    }
+
+    const value = { setPost, currentUser, comments, replyCount, deleteReply, deleteComment, commentCount }
 
     return (
         <CommentsContext.Provider value={value}>

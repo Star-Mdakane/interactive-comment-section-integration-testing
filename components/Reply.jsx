@@ -6,16 +6,20 @@ import { FaMinus, FaPlus, FaReply, FaTrash } from 'react-icons/fa';
 import ReplyForm from "@/components/ReplyForm";
 import { PiPencilSimpleFill } from 'react-icons/pi';
 import { formatDistanceToNow } from 'date-fns';
-import VoteContainer from './VoteContainer';
+import { useComments } from '@/context/CommentsContext';
+import ReplyVote from './ReplyVote';
 
 
 
 const Reply = ({ reply, user }) => {
 
+
     const image = reply.user?.image?.png;
     // console.log(reply);
     const username = reply?.user.username;
     const currentUser = user.username === username;
+
+    const { deleteReply } = useComments()
 
     const [timeFormat, setTimeFormat] = useState("")
 
@@ -32,7 +36,6 @@ const Reply = ({ reply, user }) => {
         console.log('reply btn clicked');
         setReplyInput(!replyInput)
     }
-
 
     return (
         <>
@@ -66,11 +69,13 @@ const Reply = ({ reply, user }) => {
                                 <FaMinus className='text-[10px] text-[#C5C6EF]' />
                             </button>
                         </div> */}
-                        <VoteContainer score={reply.score} />
+                        <ReplyVote score={reply.score} reply={reply} />
                         <div className='justify-self-end md:row-start-1 flex items-center'>
                             {currentUser ?
                                 (<div className='flex items-center gap-6'>
-                                    <button className='text-pri-red hover:text-pri-red/50 flex justify-self-end md:row-start-1 items-center gap-2 cursor-pointer'>
+                                    <button
+                                        onClick={() => deleteReply(reply.id)}
+                                        className='text-pri-red hover:text-pri-red/50 flex justify-self-end md:row-start-1 items-center gap-2 cursor-pointer'>
                                         <FaTrash className='text-[14px]' />
                                         <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Delete</span>
                                     </button>

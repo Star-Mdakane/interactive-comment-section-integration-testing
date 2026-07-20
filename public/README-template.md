@@ -51,12 +51,25 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 
 ## My process
 
+## Frontend functionality
+
 1. The planning has taken a lot from me, not knowing how to start. The sstructure of the json file complicates things quite a bit with main user seperated from the comments but I can see how I could have used that if I had auth but still it is the blue print container of the entire comment section.
 2. For now I will just build a stati site which will look like the the given one then I will see if I will do the functionality on it first or if I will connecct to db first then work on the funtionality.
 - So far I am loadng static data but I will see if it wll not give me problems when I fetch it from db (async and fetch will be my goto)
 3. So i designed the forms for the comment and reply
 - The design was not as simple as it looks and still needs tweaking
 - I also have trouble on where to put the forms but I have decided that they will go on every element just hidden whereby I was making it a a sibling of the component instead as a child of individual component
+4. The adding of reply and comment. I wanted to add a comment, initially you know since you have an array you use a push property. Though this needs to add an object to the array but I don't want to change the original one meaning I have to spread the array and add.
+So my solution was to just set the data to the on submit function of both forms only to realise this is not the correct approach.
+- I think the solution is to move everything on the submit to the contextt and turn it into a fucntion whereby i will call any which one I require. 
+# Will complete later
+5. Voter component. Initially I cheated by making a state which gets the score from the the components and changes the value. What I noticed is that the value only changes on the ui but not the component. I figured i needed to change the post
+# Note to self, choosing to work with nested data is not ideal, next time I will rather make states for the nested data and look for a way to sync the data. As I am struggling now, I don't know what I am going to do when it comes to working with the backend.
+- I thought of making a component which accepts the type off component and it wll conditionally render the reply or comment voter function, then I would go on to try and add whether it is increaing or decreasing to add to the function to also conditionally render the button interactivity function.
+- I was having too many error whereby I decded to spliit the the reply and comment vote components. A little( by a little I mean trial and error) tweaking and I got the buttons to work.
+
+## Backend functionality
+ 
 
 ### Built with
 

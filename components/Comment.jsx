@@ -7,7 +7,9 @@ import Image from 'next/image';
 import CommentForm from './CommentForm';
 import { PiPencilSimpleFill } from 'react-icons/pi';
 import { formatDistanceToNow } from 'date-fns';
-import VoteContainer from './VoteContainer';
+import VoteContainer from './CommentVote';
+import { useComments } from '@/context/CommentsContext';
+import CommentVote from './CommentVote';
 // import ReplyForm from "@/components/ReplyForm";
 
 
@@ -16,6 +18,8 @@ const Comment = ({ comment, user, replies }) => {
     const image = comment.user?.image?.png;
     const username = comment.user.username;
     const currentUser = user.username === username;
+
+    const { deleteComment, commentCount } = useComments()
 
     const [timeFormat, setTimeFormat] = useState("")
 
@@ -60,11 +64,13 @@ const Comment = ({ comment, user, replies }) => {
                             <FaMinus className='text-[10px] text-[#C5C6EF]' />
                         </button>
                     </div> */}
-                    <VoteContainer score={comment.score} />
+                    <CommentVote score={comment.score} comp="c" comment={comment} />
                     <div className='justify-self-end md:row-start-1 flex items-center'>
                         {currentUser ?
                             (<div className='flex items-center gap-6'>
-                                <button className='text-pri-red hover:text-pri-red/50 flex justify-self-end md:row-start-1 items-center gap-2 cursor-pointer'>
+                                <button
+                                    onClick={() => deleteComment(comment.id)}
+                                    className='text-pri-red hover:text-pri-red/50 flex justify-self-end md:row-start-1 items-center gap-2 cursor-pointer'>
                                     <FaTrash className='text-[14px]' />
                                     <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Delete</span>
                                 </button>
