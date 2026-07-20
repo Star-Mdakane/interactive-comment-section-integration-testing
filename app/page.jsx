@@ -1,15 +1,15 @@
 'use client'
 
 import Comment from "@/components/Comment";
-import CommentForm from "@/components/CommentForm";
+import AddCommentForm from "@/components/AddCommentForm";
 import { useComments } from "@/context/CommentsContext";
 
 export default function Home() {
 
   const { comments, currentUser, getReplies } = useComments()
 
-  const userName = currentUser.username;
-  const replies = getReplies(comments);
+  // const userName = currentUser.username;
+  // const replies = getReplies(comments);
 
   // console.log(userName);
 
@@ -20,7 +20,7 @@ export default function Home() {
       {comments.map(comment => (
         <Comment key={comment.id} comment={comment} user={currentUser} replies={comment.replies ?? []} />
       ))}
-      <CommentForm btnLabel="reply" user={currentUser} />
+      <AddCommentForm btnLabel="Send" user={currentUser} />
     </div>
   );
 }

@@ -62,11 +62,11 @@ const Comment = ({ comment, user, replies }) => {
                     <div className='justify-self-end md:row-start-1 flex items-center'>
                         {currentUser ?
                             (<div className='flex items-center gap-6'>
-                                <button className='text-pri-red flex justify-self-end md:row-start-1 items-center gap-2 cursor-pointer'>
+                                <button className='text-pri-red hover:text-pri-red/50 flex justify-self-end md:row-start-1 items-center gap-2 cursor-pointer'>
                                     <FaTrash className='text-[14px]' />
                                     <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Delete</span>
                                 </button>
-                                <button className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
+                                <button className='flex justify-self-end md:row-start-1  text-pri hover:text-pri/50 items-center gap-2 cursor-pointer'>
                                     <PiPencilSimpleFill className='text-[14px]' />
                                     <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Edit</span>
                                 </button>
@@ -74,7 +74,7 @@ const Comment = ({ comment, user, replies }) => {
                             :
                             (<button
                                 onClick={onReply}
-                                className='flex justify-self-end md:row-start-1  text-pri items-center gap-2 cursor-pointer'>
+                                className='flex justify-self-end md:row-start-1  text-pri hover:text-pri/50 items-center gap-2 cursor-pointer'>
                                 <FaReply className='text-[14px]' />
                                 <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Reply</span>
                             </button>)}

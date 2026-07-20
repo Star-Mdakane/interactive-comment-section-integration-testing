@@ -34,6 +34,23 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
+    const createReply = () => {
+        const newReply = {
+            content: text,
+            createdAt: new Date(),
+            id: Math.floor(Math.random * (100 + 4)),
+            score: 0,
+            replyingTo: "",
+            user: {
+                image: {
+                    png: "/images/avatars/image-juliusomo.png",
+                    webp: "/images/avatars/image-juliusomo.webp"
+                },
+                username: `${user.username}`
+            }
+        }
+    }
+
     // console.log(replies);
 
     const value = { setPost, currentUser, comments, getReplies }

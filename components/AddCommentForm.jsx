@@ -51,7 +51,7 @@ const CommentForm = ({ user, btnLabel, username }) => {
                 <textarea name="text" rows={3} id=""
                     className='w-full h-full px-4 py-2 focus:outline-text cursor-pointer'
                     placeholder='Add a comment...'
-                    defaultValue={`@${username}`}
+                    defaultValue={username ? `@${username}` : ''}
                     {...register('text')}
                 >
 
