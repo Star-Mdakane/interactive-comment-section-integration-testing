@@ -9,7 +9,7 @@ import { useForm, useWatch } from 'react-hook-form';
 
 const CommentForm = ({ user, btnLabel, username }) => {
 
-    const { setPost } = useComments()
+    const { addComment } = useComments()
 
     const image = user.user?.image?.png || user.image?.png;
 
@@ -27,28 +27,11 @@ const CommentForm = ({ user, btnLabel, username }) => {
         console.log(data);
         resetField("text")
 
-        // const text = data.text;
+        const text = data.text;
+        console.log(text);
 
-        // const newComment = {
-        //     content: text,
-        //     createdAt: new Date(),
-        //     id: Math.floor(Math.random * (100 + 4)),
-        //     score: 0,
-        //     user: {
-        //         image: {
-        //             png: "/images/avatars/image-juliusomo.png",
-        //             webp: "/images/avatars/image-juliusomo.webp"
-        //         },
-        //         username: `${user.username}`
-        //     },
-        // }
+        addComment(text)
 
-        // setPost(prev => ({
-        //     ...prev,
-        //     comments: [...prev.comments, newComment]
-        // })
-
-        // )
     }
 
     return (

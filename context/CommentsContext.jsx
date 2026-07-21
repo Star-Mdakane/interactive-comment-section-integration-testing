@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState } from "react";
 import data from '@/public/data.json'
+import { nanoid } from "nanoid";
 
 export const CommentsContext = createContext();
 
@@ -21,32 +22,85 @@ export const CommentsProvider = ({ children }) => {
 
     const addComment = (text) => {
         const newComment = {
-            context: text,
-            createdAt: new Date(),
-            id: Math.floor(Math.random() * 100 + 4),
-            score: 5,
-            user: {
-                image: {},
-                username: ""
-            },
-        }
-    }
-
-    const addReply = () => {
-        const newReply = {
             content: text,
-            createdAt: new Date(),
-            id: Math.floor(Math.random * (100 + 4)),
+            createdAt: new Date,
+            id: nanoid,
             score: 0,
-            replyingTo: "",
             user: {
                 image: {
                     png: "/images/avatars/image-juliusomo.png",
                     webp: "/images/avatars/image-juliusomo.webp"
                 },
-                username: `${user.username}`
+                username: "juliusomo"
+            },
+        }
+
+        setPost(prev => ({
+            ...prev,
+            comments: [...prev.comments, newComment]
+        })
+        )
+    }
+
+    const addReply = (id, text, val) => {
+        const newReply = {
+            content: text,
+            createdAt: new Date,
+            id: nanoid(),
+            score: 0,
+            replyingTo: `${val.user.username}`,
+            user: {
+                image: {
+                    png: "/images/avatars/image-juliusomo.png",
+                    webp: "/images/avatars/image-juliusomo.webp"
+                },
+                username: `juliusomo`
             }
         }
+
+        setPost(prev => ({
+            ...prev,
+            comments: prev.comments.map(comment =>
+                comment.id === id ?
+                    {
+                        ...comment,
+                        replies: [...comment.replies, newReply]
+                    }
+                    :
+                    comment
+            )
+        })
+        )
+    }
+
+    const addReplyTo = (id, text, val) => {
+        const newReply = {
+            content: text,
+            createdAt: new Date,
+            id: nanoid(),
+            score: 0,
+            replyingTo: `${val.user.username}`,
+            user: {
+                image: {
+                    png: "/images/avatars/image-juliusomo.png",
+                    webp: "/images/avatars/image-juliusomo.webp"
+                },
+                username: `juliusomo`
+            }
+        }
+
+        setPost(prev => ({
+            ...prev,
+            comments: prev.comments.map(comment =>
+                comment.id === id ?
+                    {
+                        ...comment,
+                        replies: [...comment.replies, newReply]
+                    } :
+                    comment
+            )
+        })
+        )
     }
 
     const editComment = (id, text) => {
@@ -147,7 +201,9 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
-    const value = { setPost, currentUser, comments, replyCount, deleteReply, deleteComment, commentCount }
+    console.log(comments);
+
+    const value = { setPost, currentUser, comments, replyCount, deleteReply, deleteComment, commentCount, addComment, addReply, addReplyTo }
 
     return (
         <CommentsContext.Provider value={value}>

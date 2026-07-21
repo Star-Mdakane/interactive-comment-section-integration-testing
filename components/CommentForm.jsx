@@ -3,12 +3,12 @@
 import { useComments } from '@/context/CommentsContext';
 import Image from 'next/image'
 import React from 'react'
-import { useForm, useWatch, Watch } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 
 
-const CommentForm = ({ user, btnLabel, username }) => {
+const CommentForm = ({ user, btnLabel, username, comment }) => {
 
-    const { setPost } = useComments()
+    const { addReply } = useComments()
 
     const image = user.user?.image?.png || user.image?.png;
     // const emptyField = data.text;
@@ -36,28 +36,8 @@ const CommentForm = ({ user, btnLabel, username }) => {
         console.log(data);
         resetField("text")
 
-        // const text = data.text;
+        addReply(comment.id, data.text, comment)
 
-        // const newComment = {
-        //     content: text,
-        //     createdAt: new Date(),
-        //     id: Math.floor(Math.random * (100 + 4)),
-        //     score: 0,
-        //     user: {
-        //         image: {
-        //             png: "/images/avatars/image-juliusomo.png",
-        //             webp: "/images/avatars/image-juliusomo.webp"
-        //         },
-        //         username: `${user.username}`
-        //     },
-        // }
-
-        // setPost(prev => ({
-        //     ...prev,
-        //     comments: [...prev.comments, newComment]
-        // })
-
-        // )
     }
 
     return (

@@ -11,7 +11,7 @@ import ReplyVote from './ReplyVote';
 
 
 
-const Reply = ({ reply, user }) => {
+const Reply = ({ reply, user, comment }) => {
 
 
     const image = reply.user?.image?.png;
@@ -26,7 +26,8 @@ const Reply = ({ reply, user }) => {
     // const date = currentUser ? timeFormat : reply.createdAt
 
     useEffect(() => {
-        setTimeFormat(formatDistanceToNow(new Date(Date.now()), { addSuffix: true }))
+        reply.createdAt instanceof Date ??
+            setTimeFormat(formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true }))
     }, [])
 
 
@@ -40,9 +41,9 @@ const Reply = ({ reply, user }) => {
     return (
         <>
             <div className='flex flex-col mb-4'>
-                <div className='h-full md:h-42 flex md:gap-10'>
+                <div className='w-full h-full md:h-42 flex md:gap-10'>
                     <div className='hidden h-full md:block md:ml-10 w-1 bg-[#E9EBF0]'></div>
-                    <div className='bg-white md:h-38 rounded-lg p-4 grid gap-4 md:gap-x-6 grid-cols-2 md:grid-cols-[40px_3fr_1fr]'>
+                    <div className='w-full bg-white md:h-38 rounded-lg p-4 grid gap-4 md:gap-x-6 grid-cols-2 md:grid-cols-[40px_3fr_1fr]'>
                         <div className='w-full flex col-span-full md:row-start-1 md:col-start-2 md:col-span-1 gap-4 items-center'>
                             <Image
                                 src={image}
@@ -94,7 +95,7 @@ const Reply = ({ reply, user }) => {
 
                     </div>
                 </div>
-                {replyInput && <ReplyForm btnLabel="reply" user={user} reply={reply} />}
+                {replyInput && <ReplyForm btnLabel="reply" user={user} reply={reply} comment={comment} />}
             </div>
         </>
     )

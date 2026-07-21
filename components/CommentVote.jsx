@@ -1,7 +1,7 @@
 'use client'
 
 import { useComments } from '@/context/CommentsContext'
-import React, { useState } from 'react'
+import React from 'react'
 import { FaMinus, FaPlus } from 'react-icons/fa'
 
 const CommentVote = ({ score, comment }) => {
@@ -9,7 +9,7 @@ const CommentVote = ({ score, comment }) => {
     const { commentCount } = useComments()
 
 
-    console.log(score);
+    // console.log(score);
     return (
         <div className='flex items-center justify-around px-2 md:py-2 bg-bg rounded-[10px] h-10 w-25 md:w-10 md:h-25 md:flex-col md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-3'>
             <button

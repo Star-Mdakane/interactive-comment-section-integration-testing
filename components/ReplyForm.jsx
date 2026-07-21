@@ -1,13 +1,13 @@
 'use client'
 
-import { CommentsProvider, useComments } from '@/context/CommentsContext'
+import { useComments } from '@/context/CommentsContext'
 import Image from 'next/image'
 import React from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 
-const CommentForm = ({ user, btnLabel, reply }) => {
+const CommentForm = ({ user, btnLabel, reply, comment }) => {
 
-    const { setPost } = useComments()
+    const { addReplyTo } = useComments()
 
     const image = user.user?.image?.png || user.image?.png;
 
@@ -32,33 +32,7 @@ const CommentForm = ({ user, btnLabel, reply }) => {
 
         console.log(data);
 
-        // const newReply = {
-        //     content: text,
-        //     createdAt: new Date(),
-        //     id: Math.floor(Math.random * (100 + 4)),
-        //     score: 0,
-        //     replyingTo: "",
-        //     user: {
-        //         image: {
-        //             png: "/images/avatars/image-juliusomo.png",
-        //             webp: "/images/avatars/image-juliusomo.webp"
-        //         },
-        //         username: `${user.username}`
-        //     }
-        // }
-
-        // setPost(prev => ({
-        //     ...prev,
-        //     comments: prev.comments.map(comment =>
-        //         comment.id === CommentsId ? {
-        //             ...comments,
-        //             replies: [...comment.replies, newReply]
-        //         }
-        //             : comment
-        //     ),
-
-        // })
-        // )
+        addReplyTo(comment.id, text, reply)
 
     }
 
@@ -73,7 +47,6 @@ const CommentForm = ({ user, btnLabel, reply }) => {
                     <textarea name="text" rows={3} id=""
                         className='w-full h-full px-4 py-2 focus:outline-text cursor-pointer'
                         placeholder='Add reply...'
-                        // defaultValue={`@${reply.user.username}`}
                         {...register('text')}
                     >
 

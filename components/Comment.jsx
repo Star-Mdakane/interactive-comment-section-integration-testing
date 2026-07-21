@@ -7,7 +7,6 @@ import Image from 'next/image';
 import CommentForm from './CommentForm';
 import { PiPencilSimpleFill } from 'react-icons/pi';
 import { formatDistanceToNow } from 'date-fns';
-import VoteContainer from './CommentVote';
 import { useComments } from '@/context/CommentsContext';
 import CommentVote from './CommentVote';
 // import ReplyForm from "@/components/ReplyForm";
@@ -23,12 +22,11 @@ const Comment = ({ comment, user, replies }) => {
 
     const [timeFormat, setTimeFormat] = useState("")
 
-    // const date = currentUser ? timeFormat : comment.createdAt
-
     useEffect(() => {
-        setTimeFormat(formatDistanceToNow(new Date(Date.now()), { addSuffix: true }))
-    }, [])
+        comment.createdAt instanceof Date ??
+            setTimeFormat(formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true }))
 
+    }, [])
 
     // console.log(username);
 
@@ -55,16 +53,7 @@ const Comment = ({ comment, user, replies }) => {
                     <p className='col-span-full md:col-start-2 md:col-span-2 text-[16px] leading-[150%] tracking-normal font-normal'>
                         {comment.content}
                     </p>
-                    {/* <div className='flex items-center justify-around px-2 md:py-2 bg-bg rounded-[10px] h-10 w-25 md:w-10 md:h-25 md:flex-col md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-3'>
-                        <button className='cursor-pointer w-full h-full flex justify-center items-center'>
-                            <FaPlus className='text-[10px] text-[#C5C6EF]' />
-                        </button>
-                        <p className='text-pri text-[16px] leading-[150%] tracking-normal font-medium'>{comment.score}</p>
-                        <button className='cursor-pointer w-full h-full flex justify-center items-center'>
-                            <FaMinus className='text-[10px] text-[#C5C6EF]' />
-                        </button>
-                    </div> */}
-                    <CommentVote score={comment.score} comp="c" comment={comment} />
+                    <CommentVote score={comment.score} comment={comment} />
                     <div className='justify-self-end md:row-start-1 flex items-center'>
                         {currentUser ?
                             (<div className='flex items-center gap-6'>
@@ -88,11 +77,11 @@ const Comment = ({ comment, user, replies }) => {
                             </button>)}
                     </div>
                 </div>
-                {replyInput && <CommentForm btnLabel="reply" user={user} username={username} />}
+                {replyInput && <CommentForm btnLabel="reply" user={user} username={username} comment={comment} />}
             </div>
 
             {replies.map(reply => (
-                <Reply key={reply.id} reply={reply} user={user} />
+                <Reply key={reply.id} reply={reply} user={user} comment={comment} />
             ))}
 
         </>
