@@ -11,9 +11,16 @@ const CommentForm = ({ user, btnLabel, reply, comment }) => {
 
     const image = user.user?.image?.png || user.image?.png;
 
-    const { register, handleSubmit, resetField, control } = useForm({
+    const username = reply.user.username;
+    const defaultUser = `@${username}`
+
+    const { register,
+        handleSubmit,
+        resetField,
+        control,
+    } = useForm({
         defaultValues: {
-            text: `@${reply.user.username}`
+            text: defaultUser
         }
     })
 
@@ -28,11 +35,21 @@ const CommentForm = ({ user, btnLabel, reply, comment }) => {
     const onSubmit = (data) => {
         resetField('text')
 
-        const text = data.text;
+        // let text = data.text
+        let desc = data.text
 
-        console.log(data);
+        if (desc.startsWith(defaultUser)) {
+            desc = desc.replace(defaultUser, "")
+        }
 
-        addReplyTo(comment.id, text, reply)
+        const cleanedData = { ...data, text: desc }
+
+        console.log(cleanedData);
+
+        // console.log(data);
+
+
+        addReplyTo(comment.id, cleanedData.text, reply)
 
     }
 

@@ -201,7 +201,7 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
-    console.log(comments);
+    // console.log(comments);
 
     const value = { setPost, currentUser, comments, replyCount, deleteReply, deleteComment, commentCount, addComment, addReply, addReplyTo }
 

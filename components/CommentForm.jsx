@@ -6,18 +6,19 @@ import React from 'react'
 import { useForm, useWatch } from 'react-hook-form';
 
 
-const CommentForm = ({ user, btnLabel, username, comment }) => {
+const CommentForm = ({ user, btnLabel, username, comment, getDefault }) => {
 
     const { addReply } = useComments()
 
     const image = user.user?.image?.png || user.image?.png;
-    // const emptyField = data.text;
-    // console.log(emptyField);
+
+    const defaultUser = `@${username}`
+
 
     const { register, handleSubmit, resetField, control } = useForm({
         defaultValues:
         {
-            text: `@${username}`
+            text: defaultUser
         }
     })
 
@@ -29,14 +30,19 @@ const CommentForm = ({ user, btnLabel, username, comment }) => {
 
     const emptyField = field.trim() === ''
 
-    // console.log(emptyField);
-
-    // console.log(comment);
     const onSubmit = (data) => {
-        console.log(data);
+        // console.log(data);
         resetField("text")
 
-        addReply(comment.id, data.text, comment)
+        let desc = data.text
+
+        if (desc.startsWith(defaultUser)) {
+            desc = desc.replace(defaultUser, "")
+        }
+
+        const cleanedData = { ...data, text: desc }
+
+        addReply(comment.id, cleanedData.text, comment)
 
     }
 

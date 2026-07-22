@@ -67,6 +67,12 @@ So my solution was to just set the data to the on submit function of both forms 
 # Note to self, choosing to work with nested data is not ideal, next time I will rather make states for the nested data and look for a way to sync the data. As I am struggling now, I don't know what I am going to do when it comes to working with the backend.
 - I thought of making a component which accepts the type off component and it wll conditionally render the reply or comment voter function, then I would go on to try and add whether it is increaing or decreasing to add to the function to also conditionally render the button interactivity function.
 - I was having too many error whereby I decded to spliit the the reply and comment vote components. A little( by a little I mean trial and error) tweaking and I got the buttons to work.
+6. Adding comment and reply funcionality.
+- I initially i had an add comment and add reply on their respectivve component but on trying it out I realised that it is not functioning the way I intended, where the reply function had to be used on both components with the comment used on the add comment form only
+- A minor bottleneck was that I used the same reply function on comment and reply component and it didn't work as expected and had to tweak it for replies.
+- FOr the whole day I am working on removing duplicate username on form, still no solution. Tried on the component side nothing, now I am working on the form side but still o luck. I am starting to get the feeling it has somethig to do with the decorator. My guess got me close, I was working with data not considering the decorator
+- The way to solve the issue was to put the username into a variable since it did not allow m to use decorators but then I used the variable as a conditional and it works.
+7. Now I will attempt to edit a text. I wil take the same route i did with deletion just I have to work on getting the text in order to play around with.
 
 ## Backend functionality
  

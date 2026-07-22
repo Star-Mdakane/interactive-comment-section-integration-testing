@@ -2,15 +2,13 @@
 
 import React, { useEffect, useState } from 'react'
 import Reply from './Reply';
-import { FaMinus, FaPlus, FaReply, FaTrash } from 'react-icons/fa';
+import { FaReply, FaTrash } from 'react-icons/fa';
 import Image from 'next/image';
 import CommentForm from './CommentForm';
 import { PiPencilSimpleFill } from 'react-icons/pi';
 import { formatDistanceToNow } from 'date-fns';
 import { useComments } from '@/context/CommentsContext';
 import CommentVote from './CommentVote';
-// import ReplyForm from "@/components/ReplyForm";
-
 
 const Comment = ({ comment, user, replies }) => {
 
@@ -18,14 +16,12 @@ const Comment = ({ comment, user, replies }) => {
     const username = comment.user.username;
     const currentUser = user.username === username;
 
-    const { deleteComment, commentCount } = useComments()
+    const { deleteComment } = useComments()
 
     const [timeFormat, setTimeFormat] = useState("")
 
     useEffect(() => {
-        comment.createdAt instanceof Date ??
-            setTimeFormat(formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true }))
-
+        currentUser ? setTimeFormat(formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })) : comment.createdAt
     }, [])
 
     // console.log(username);
@@ -48,7 +44,7 @@ const Comment = ({ comment, user, replies }) => {
                             height={32} />
                         <p className='text-[16px] text-text-bold leading-[150%] tracking-normal font-medium'>{username}</p>
                         {currentUser && <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p>}
-                        <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{currentUser ? timeFormat : comment.createdAt}</p>
+                        <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{comment.createdAt instanceof Date ? timeFormat : comment.createdAt}</p>
                     </div>
                     <p className='col-span-full md:col-start-2 md:col-span-2 text-[16px] leading-[150%] tracking-normal font-normal'>
                         {comment.content}
@@ -85,7 +81,6 @@ const Comment = ({ comment, user, replies }) => {
             ))}
 
         </>
-
     )
 }
 

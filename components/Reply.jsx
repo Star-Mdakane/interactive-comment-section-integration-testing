@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
-import { FaMinus, FaPlus, FaReply, FaTrash } from 'react-icons/fa';
+import { FaReply, FaTrash } from 'react-icons/fa';
 import ReplyForm from "@/components/ReplyForm";
 import { PiPencilSimpleFill } from 'react-icons/pi';
 import { formatDistanceToNow } from 'date-fns';
@@ -26,17 +26,21 @@ const Reply = ({ reply, user, comment }) => {
     // const date = currentUser ? timeFormat : reply.createdAt
 
     useEffect(() => {
-        reply.createdAt instanceof Date ??
-            setTimeFormat(formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true }))
+        currentUser ? setTimeFormat(formatDistanceToNow(new Date(reply.createdAt), { addSuffix: true })) : reply.createdAt
     }, [])
-
 
     const [replyInput, setReplyInput] = useState(false)
 
     const onReply = () => {
-        console.log('reply btn clicked');
+        // console.log('reply btn clicked');
         setReplyInput(!replyInput)
     }
+
+    const rep = reply.replyingTo
+
+    // console.log(`rest: ${rest},
+    //     content: ${reply.content}
+    //     `);
 
     return (
         <>
@@ -53,23 +57,15 @@ const Reply = ({ reply, user, comment }) => {
                             <p className='text-[16px] text-text-bold leading-[150%] tracking-normal font-medium'>{username}</p>
                             {currentUser && <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p>}
 
-                            <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{currentUser ? timeFormat : reply.createdAt}</p>
+                            <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{reply.createdAt instanceof Date ? timeFormat : reply.createdAt}</p>
                         </div>
-                        <p className='col-span-full md:col-start-2 md:col-span-2text-[16px] leading-[150%] tracking-normal font-normal'>
-                            <span className='text-pri text-[16px] leading-[150%] tracking-normal font-medium'>
-                                @{reply.replyingTo}{" "}
+                        <p className='col-span-full md:col-start-2 md:col-span-2text-[16px] leading-[150%] tracking-normal text-text text-[16px] font-normal'>
+                            <span className={`font-medium text-pri`}>
+                                @{rep}{" "}
                             </span>
                             {reply.content}
                         </p>
-                        {/* <div className='flex items-center justify-around px-2 md:py-2 bg-bg rounded-[10px] h-10 w-25 md:w-10 md:h-25 md:flex-col md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-3'>
-                            <button className='cursor-pointer w-full h-full flex justify-center items-center'>
-                                <FaPlus className='text-[10px] text-[#C5C6EF]' />
-                            </button>
-                            <p className='text-pri text-[16px] leading-[150%] tracking-normal font-medium'>{reply.score}</p>
-                            <button className='cursor-pointer w-full h-full flex justify-center items-center'>
-                                <FaMinus className='text-[10px] text-[#C5C6EF]' />
-                            </button>
-                        </div> */}
+
                         <ReplyVote score={reply.score} reply={reply} />
                         <div className='justify-self-end md:row-start-1 flex items-center'>
                             {currentUser ?
