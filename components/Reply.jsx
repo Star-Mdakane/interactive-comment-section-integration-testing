@@ -21,13 +21,24 @@ const Reply = ({ reply, user, comment }) => {
 
     const { deleteReply } = useComments()
 
-    const [timeFormat, setTimeFormat] = useState("")
-
-    // const date = currentUser ? timeFormat : reply.createdAt
+    const [now, setNow] = useState(Date.now());
 
     useEffect(() => {
-        currentUser ? setTimeFormat(formatDistanceToNow(new Date(reply.createdAt), { addSuffix: true })) : reply.createdAt
-    }, [])
+        const id = setInterval(() => {
+            setNow(Date.now());
+        }, 60000);
+
+        return () => clearInterval(id);
+    }, []);
+
+    const date = new Date(reply.createdAt);
+
+    const displayTime = isNaN(date.getTime())
+        ? reply.createdAt
+        : formatDistanceToNow(date, {
+            addSuffix: true,
+            now,
+        });
 
     const [replyInput, setReplyInput] = useState(false)
 
@@ -57,7 +68,7 @@ const Reply = ({ reply, user, comment }) => {
                             <p className='text-[16px] text-text-bold leading-[150%] tracking-normal font-medium'>{username}</p>
                             {currentUser && <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p>}
 
-                            <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{reply.createdAt instanceof Date ? timeFormat : reply.createdAt}</p>
+                            <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{displayTime}</p>
                         </div>
                         <p className='col-span-full md:col-start-2 md:col-span-2text-[16px] leading-[150%] tracking-normal text-text text-[16px] font-normal'>
                             <span className={`font-medium text-pri`}>

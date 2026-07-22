@@ -45,7 +45,7 @@ export const CommentsProvider = ({ children }) => {
     const addReply = (id, text, val) => {
         const newReply = {
             content: text,
-            createdAt: new Date,
+            createdAt: new Date(),
             id: nanoid(),
             score: 0,
             replyingTo: `${val.user.username}`,
@@ -76,7 +76,7 @@ export const CommentsProvider = ({ children }) => {
     const addReplyTo = (id, text, val) => {
         const newReply = {
             content: text,
-            createdAt: new Date,
+            createdAt: new Date(),
             id: nanoid(),
             score: 0,
             replyingTo: `${val.user.username}`,
