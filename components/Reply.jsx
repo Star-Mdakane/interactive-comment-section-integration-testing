@@ -5,9 +5,11 @@ import React, { useEffect, useState } from 'react'
 import { FaReply, FaTrash } from 'react-icons/fa';
 import ReplyForm from "@/components/ReplyForm";
 import { PiPencilSimpleFill } from 'react-icons/pi';
+import { TbPencilOff } from "react-icons/tb"
 import { formatDistanceToNow } from 'date-fns';
 import { useComments } from '@/context/CommentsContext';
 import ReplyVote from './ReplyVote';
+import EditComponent from './EditComponent';
 
 
 
@@ -41,10 +43,16 @@ const Reply = ({ reply, user, comment }) => {
         });
 
     const [replyInput, setReplyInput] = useState(false)
+    const [edit, setEdit] = useState(false)
+
 
     const onReply = () => {
         // console.log('reply btn clicked');
         setReplyInput(!replyInput)
+    }
+
+    const onEdit = () => {
+        setEdit(!edit)
     }
 
     const rep = reply.replyingTo
@@ -55,10 +63,10 @@ const Reply = ({ reply, user, comment }) => {
 
     return (
         <>
-            <div className='flex flex-col mb-4'>
-                <div className='w-full h-full md:h-42 flex md:gap-10'>
+            <div className='flex flex-col gap-4 mb-4'>
+                <div className='w-full h-full md:min-h-42 flex md:gap-10'>
                     <div className='hidden h-full md:block md:ml-10 w-1 bg-[#E9EBF0]'></div>
-                    <div className='w-full bg-white md:h-38 rounded-lg p-4 grid gap-4 md:gap-x-6 grid-cols-2 md:grid-cols-[40px_3fr_1fr]'>
+                    <div className='w-full bg-white md:min-h-38 rounded-lg p-4 grid gap-4 md:gap-x-6 grid-cols-2 md:grid-cols-[40px_3fr_1fr]'>
                         <div className='w-full flex col-span-full md:row-start-1 md:col-start-2 md:col-span-1 gap-4 items-center'>
                             <Image
                                 src={image}
@@ -70,13 +78,16 @@ const Reply = ({ reply, user, comment }) => {
 
                             <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{displayTime}</p>
                         </div>
-                        <p className='col-span-full md:col-start-2 md:col-span-2text-[16px] leading-[150%] tracking-normal text-text text-[16px] font-normal'>
-                            <span className={`font-medium text-pri`}>
-                                @{rep}{" "}
-                            </span>
-                            {reply.content}
-                        </p>
-
+                        {edit ?
+                            <EditComponent />
+                            :
+                            (<p className='col-span-full md:col-start-2 md:col-span-2 text-[16px] leading-[150%] tracking-normal text-text font-normal'>
+                                <span className={`font-medium text-pri`}>
+                                    @{rep}{" "}
+                                </span>
+                                {reply.content}
+                            </p>)
+                        }
                         <ReplyVote score={reply.score} reply={reply} />
                         <div className='justify-self-end md:row-start-1 flex items-center'>
                             {currentUser ?
@@ -87,9 +98,17 @@ const Reply = ({ reply, user, comment }) => {
                                         <FaTrash className='text-[14px]' />
                                         <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Delete</span>
                                     </button>
-                                    <button className='flex justify-self-end md:row-start-1  text-pri hover:text-pri/50 items-center gap-2 cursor-pointer'>
-                                        <PiPencilSimpleFill className='text-[14px]' />
-                                        <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Edit</span>
+                                    <button
+                                        onClick={onEdit}
+                                        className='flex justify-self-end md:row-start-1  text-pri hover:text-pri/50 items-center gap-2 cursor-pointer'>
+                                        {edit ?
+                                            <TbPencilOff className='text-[14px]' />
+                                            :
+                                            <PiPencilSimpleFill className='text-[14px]' />
+                                        }
+                                        <span className='text-[16px] leading-[150%] tracking-normal font-medium'>
+                                            {edit ? 'Cancel' : 'Edit'}
+                                        </span>
                                     </button>
                                 </div>)
                                 : (<button

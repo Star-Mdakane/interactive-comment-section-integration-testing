@@ -9,6 +9,8 @@ import { PiPencilSimpleFill } from 'react-icons/pi';
 import { formatDistanceToNow } from 'date-fns';
 import { useComments } from '@/context/CommentsContext';
 import CommentVote from './CommentVote';
+import EditComponent from './EditComponent';
+import { TbPencilOff } from 'react-icons/tb';
 
 const Comment = ({ comment, user, replies }) => {
 
@@ -38,9 +40,14 @@ const Comment = ({ comment, user, replies }) => {
         });
 
     const [replyInput, setReplyInput] = useState(false)
+    const [edit, setEdit] = useState(false)
 
     const onReply = () => {
         setReplyInput(!replyInput)
+    }
+
+    const onEdit = () => {
+        setEdit(!edit)
     }
 
     return (
@@ -57,9 +64,13 @@ const Comment = ({ comment, user, replies }) => {
                         {currentUser && <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p>}
                         <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{displayTime}</p>
                     </div>
-                    <p className='col-span-full md:col-start-2 md:col-span-2 text-[16px] leading-[150%] tracking-normal font-normal'>
-                        {comment.content}
-                    </p>
+                    {edit ?
+                        <EditComponent />
+                        :
+                        (<p className='col-span-full md:col-start-2 md:col-span-2 text-[16px] leading-[150%] tracking-normal font-normal'>
+                            {comment.content}
+                        </p>)
+                    }
                     <CommentVote score={comment.score} comment={comment} />
                     <div className='justify-self-end md:row-start-1 flex items-center'>
                         {currentUser ?
@@ -70,9 +81,17 @@ const Comment = ({ comment, user, replies }) => {
                                     <FaTrash className='text-[14px]' />
                                     <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Delete</span>
                                 </button>
-                                <button className='flex justify-self-end md:row-start-1  text-pri hover:text-pri/50 items-center gap-2 cursor-pointer'>
-                                    <PiPencilSimpleFill className='text-[14px]' />
-                                    <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Edit</span>
+                                <button
+                                    onClick={onEdit}
+                                    className='flex justify-self-end md:row-start-1  text-pri hover:text-pri/50 items-center gap-2 cursor-pointer'>
+                                    {edit ?
+                                        <TbPencilOff className='text-[14px]' />
+                                        :
+                                        <PiPencilSimpleFill className='text-[14px]' />
+                                    }
+                                    <span className='text-[16px] leading-[150%] tracking-normal font-medium'>
+                                        {edit ? 'Cancel' : 'Edit'}
+                                    </span>
                                 </button>
                             </div>)
                             :

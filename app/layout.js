@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={rubik.className}
     >
-      <body className="min-h-screen w-screen flex flex-col items-center justify-center bg-bg text-text">
+      <body className="min-h-screen w-screen flex flex-col items-center justify-center bg-bg text-text mt-15">
         <CommentsProvider>
           {children}
         </CommentsProvider>
