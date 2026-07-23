@@ -73,6 +73,8 @@ So my solution was to just set the data to the on submit function of both forms 
 - FOr the whole day I am working on removing duplicate username on form, still no solution. Tried on the component side nothing, now I am working on the form side but still o luck. I am starting to get the feeling it has somethig to do with the decorator. My guess got me close, I was working with data not considering the decorator
 - The way to solve the issue was to put the username into a variable since it did not allow m to use decorators but then I used the variable as a conditional and it works.
 7. Now I will attempt to edit a text. I wil take the same route i did with deletion just I have to work on getting the text in order to play around with.
+8. I just worked on the time format...after many attempts I failed to make it update buti was assisted by AI and it works.
+- I started with creating a form that will aooear when you click edit, then the styingchange and ui, next is the data manipulation.
 
 ## Backend functionality
  
