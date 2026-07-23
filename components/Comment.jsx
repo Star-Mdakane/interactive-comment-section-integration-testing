@@ -39,6 +39,8 @@ const Comment = ({ comment, user, replies }) => {
             now,
         });
 
+    const isNewReply = comment?.isNew ?? false;
+
     const [replyInput, setReplyInput] = useState(false)
     const [edit, setEdit] = useState(false)
 
@@ -61,11 +63,11 @@ const Comment = ({ comment, user, replies }) => {
                             width={32}
                             height={32} />
                         <p className='text-[16px] text-text-bold leading-[150%] tracking-normal font-medium'>{username}</p>
-                        {currentUser && <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p>}
+                        {isNewReply && <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p>}
                         <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{displayTime}</p>
                     </div>
                     {edit ?
-                        <EditComponent />
+                        <EditComponent item={comment} type="com" setEdit={setEdit} />
                         :
                         (<p className='col-span-full md:col-start-2 md:col-span-2 text-[16px] leading-[150%] tracking-normal font-normal'>
                             {comment.content}
@@ -73,7 +75,7 @@ const Comment = ({ comment, user, replies }) => {
                     }
                     <CommentVote score={comment.score} comment={comment} />
                     <div className='justify-self-end md:row-start-1 flex items-center'>
-                        {currentUser ?
+                        {isNewReply ?
                             (<div className='flex items-center gap-6'>
                                 <button
                                     onClick={() => deleteComment(comment.id)}
@@ -103,7 +105,7 @@ const Comment = ({ comment, user, replies }) => {
                             </button>)}
                     </div>
                 </div>
-                {replyInput && <CommentForm btnLabel="reply" user={user} username={username} comment={comment} />}
+                {replyInput && <CommentForm btnLabel="reply" user={user} username={username} comment={comment} onReply={setReplyInput} />}
             </div>
 
             {replies.map(reply => (

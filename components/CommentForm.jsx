@@ -6,7 +6,7 @@ import React from 'react'
 import { useForm, useWatch } from 'react-hook-form';
 
 
-const CommentForm = ({ user, btnLabel, username, comment, getDefault }) => {
+const CommentForm = ({ user, btnLabel, username, comment, onReply }) => {
 
     const { addReply } = useComments()
 
@@ -33,6 +33,7 @@ const CommentForm = ({ user, btnLabel, username, comment, getDefault }) => {
     const onSubmit = (data) => {
         // console.log(data);
         resetField("text")
+        onReply(false)
 
         let desc = data.text
 

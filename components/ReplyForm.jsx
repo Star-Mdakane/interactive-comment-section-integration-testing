@@ -5,7 +5,7 @@ import Image from 'next/image'
 import React from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 
-const CommentForm = ({ user, btnLabel, reply, comment }) => {
+const CommentForm = ({ user, btnLabel, reply, comment, onReply }) => {
 
     const { addReplyTo } = useComments()
 
@@ -34,6 +34,7 @@ const CommentForm = ({ user, btnLabel, reply, comment }) => {
 
     const onSubmit = (data) => {
         resetField('text')
+        onReply(false)
 
         // let text = data.text
         let desc = data.text

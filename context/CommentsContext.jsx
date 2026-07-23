@@ -23,8 +23,9 @@ export const CommentsProvider = ({ children }) => {
     const addComment = (text) => {
         const newComment = {
             content: text,
-            createdAt: new Date,
-            id: nanoid,
+            createdAt: new Date(),
+            isNew: true,
+            id: nanoid(),
             score: 0,
             user: {
                 image: {
@@ -46,6 +47,7 @@ export const CommentsProvider = ({ children }) => {
         const newReply = {
             content: text,
             createdAt: new Date(),
+            isNew: true,
             id: nanoid(),
             score: 0,
             replyingTo: `${val.user.username}`,
@@ -77,6 +79,7 @@ export const CommentsProvider = ({ children }) => {
         const newReply = {
             content: text,
             createdAt: new Date(),
+            isNew: true,
             id: nanoid(),
             score: 0,
             replyingTo: `${val.user.username}`,
@@ -103,8 +106,43 @@ export const CommentsProvider = ({ children }) => {
         )
     }
 
-    const editComment = (id, text) => {
+    const editComment = (id, text, type) => {
 
+        if (type === 'com') {
+            setPost(prev => ({
+                ...prev,
+                comments: prev.comments.map(comment =>
+                    comment.id === id ?
+                        {
+                            ...comment,
+                            content: comment.content = text
+                        }
+                        :
+                        comment
+                )
+            })
+            )
+        } else if (type === 're') {
+            setPost(prev => ({
+                ...prev,
+                comments: prev.comments.map(comment =>
+
+                ({
+                    ...comment,
+                    replies: (comment.replies ?? []).map(reply =>
+                        id === reply.id ?
+                            {
+                                ...reply,
+                                content: text
+                            } :
+                            reply
+                    )
+
+                })
+                )
+            })
+            )
+        }
     }
 
     const deleteComment = (id) => {
@@ -201,9 +239,21 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
-    // console.log(comments);
+    console.log(comments);
 
-    const value = { setPost, currentUser, comments, replyCount, deleteReply, deleteComment, commentCount, addComment, addReply, addReplyTo }
+    const value = {
+        setPost,
+        currentUser,
+        comments,
+        replyCount,
+        deleteReply,
+        deleteComment,
+        commentCount,
+        addComment,
+        addReply,
+        addReplyTo,
+        editComment
+    }
 
     return (
         <CommentsContext.Provider value={value}>

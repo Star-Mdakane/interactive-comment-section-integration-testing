@@ -28,9 +28,7 @@ const Reply = ({ reply, user, comment }) => {
     useEffect(() => {
         const id = setInterval(() => {
             setNow(Date.now());
-        }, 60000);
-
-        return () => clearInterval(id);
+        }, 60000); return () => clearInterval(id);
     }, []);
 
     const date = new Date(reply.createdAt);
@@ -41,6 +39,10 @@ const Reply = ({ reply, user, comment }) => {
             addSuffix: true,
             now,
         });
+
+    const isNewReply = reply?.isNew ?? false;
+
+    console.log(isNewReply);
 
     const [replyInput, setReplyInput] = useState(false)
     const [edit, setEdit] = useState(false)
@@ -74,12 +76,12 @@ const Reply = ({ reply, user, comment }) => {
                                 width={32}
                                 height={32} />
                             <p className='text-[16px] text-text-bold leading-[150%] tracking-normal font-medium'>{username}</p>
-                            {currentUser && <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p>}
+                            {isNewReply && <p className='text-[13px] leading-[150%] tracking-normal text-white bg-pri rounded-xs px-1 py-0.5 font-normal'>you</p>}
 
                             <p className='text-[16px] leading-[150%] tracking-normal font-normal'>{displayTime}</p>
                         </div>
                         {edit ?
-                            <EditComponent />
+                            <EditComponent item={reply} type="re" setEdit={setEdit} />
                             :
                             (<p className='col-span-full md:col-start-2 md:col-span-2 text-[16px] leading-[150%] tracking-normal text-text font-normal'>
                                 <span className={`font-medium text-pri`}>
@@ -90,7 +92,7 @@ const Reply = ({ reply, user, comment }) => {
                         }
                         <ReplyVote score={reply.score} reply={reply} />
                         <div className='justify-self-end md:row-start-1 flex items-center'>
-                            {currentUser ?
+                            {isNewReply ?
                                 (<div className='flex items-center gap-6'>
                                     <button
                                         onClick={() => deleteReply(reply.id)}
@@ -121,7 +123,7 @@ const Reply = ({ reply, user, comment }) => {
 
                     </div>
                 </div>
-                {replyInput && <ReplyForm btnLabel="reply" user={user} reply={reply} comment={comment} />}
+                {replyInput && <ReplyForm btnLabel="reply" user={user} reply={reply} comment={comment} onReply={setReplyInput} />}
             </div>
         </>
     )

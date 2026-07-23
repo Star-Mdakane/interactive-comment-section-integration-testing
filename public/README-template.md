@@ -75,8 +75,13 @@ So my solution was to just set the data to the on submit function of both forms 
 7. Now I will attempt to edit a text. I wil take the same route i did with deletion just I have to work on getting the text in order to play around with.
 8. I just worked on the time format...after many attempts I failed to make it update buti was assisted by AI and it works.
 - I started with creating a form that will aooear when you click edit, then the styingchange and ui, next is the data manipulation.
+- The updates work. I thought of making a new object and leaving the objects as is. Then I thought, what if I just take the item where I map and edit the text? will that not work, ad it did.
+- I had to tweak the function for editing the replies and good.
+9. One last thing for front end is is to change the action buttons on the ui but their functionality is perfect.
+10. I think that is it, the front end is complete, eveerything working.
 
 ## Backend functionality
+1. This is where the fun begins. Will have to see where I start with db, models, api and all backend stuff and if it will be able to work in conjunction with backend.
  
 
 ### Built with
