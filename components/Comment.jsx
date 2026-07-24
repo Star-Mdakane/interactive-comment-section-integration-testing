@@ -11,6 +11,7 @@ import { useComments } from '@/context/CommentsContext';
 import CommentVote from './CommentVote';
 import EditComponent from './EditComponent';
 import { TbPencilOff } from 'react-icons/tb';
+import ConfirmDelete from './ConfirmDelete';
 
 const Comment = ({ comment, user, replies }) => {
 
@@ -18,7 +19,7 @@ const Comment = ({ comment, user, replies }) => {
     const username = comment.user.username;
     const currentUser = user.username === username;
 
-    const { deleteComment } = useComments()
+    const { deleteComment, showDelete, setShowDelete } = useComments()
 
     const [now, setNow] = useState(Date.now());
 
@@ -52,8 +53,13 @@ const Comment = ({ comment, user, replies }) => {
         setEdit(!edit)
     }
 
+    const onDelete = () => {
+
+    }
+
     return (
-        <>
+        <div className='relative'>
+            {showDelete && <ConfirmDelete id={comment.id} type='com' />}
             <div className='flex flex-col gap-6 mb-6'>
                 <div className='bg-white rounded-lg p-4 grid gap-4 md:gap-x-6 grid-cols-2 md:grid-cols-[40px_3fr_1fr]'>
                     <div className='w-full flex col-span-full md:row-start-1 md:col-start-2 md:col-span-1 gap-4 items-center'>
@@ -78,7 +84,7 @@ const Comment = ({ comment, user, replies }) => {
                         {isNewReply ?
                             (<div className='flex items-center gap-6'>
                                 <button
-                                    onClick={() => deleteComment(comment.id)}
+                                    onClick={() => setShowDelete(true)}
                                     className='text-pri-red hover:text-pri-red/50 flex justify-self-end md:row-start-1 items-center gap-2 cursor-pointer'>
                                     <FaTrash className='text-[14px]' />
                                     <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Delete</span>
@@ -111,8 +117,7 @@ const Comment = ({ comment, user, replies }) => {
             {replies.map(reply => (
                 <Reply key={reply.id} reply={reply} user={user} comment={comment} />
             ))}
-
-        </>
+        </div>
     )
 }
 

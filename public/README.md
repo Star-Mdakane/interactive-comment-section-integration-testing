@@ -1,24 +1,29 @@
-# Frontend Mentor - Interactive comments section
+# Frontend Mentor - Interactive comments section solution
 
-![Design preview for the Interactive comments section coding challenge](preview.jpg)
+This is a solution to the [Interactive comments section challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
-## Welcome! 👋
+## Table of contents
 
-Thanks for checking out this front-end coding challenge.
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+  - [AI Collaboration](#ai-collaboration)
+- [Author](#author)
+- [Acknowledgments](#acknowledgments)
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects.
+**Note: Delete this note and update the table of contents based on what sections you keep.**
 
-**To do this challenge, you need a strong understanding of HTML, CSS and JavaScript.**
+## Overview
 
-## The challenge
+### The challenge
 
-Your challenge is to build out this interactive comments section and get it looking as close to the design as possible.
-
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
-
-We provide the data in a local `data.json` file, so use that to populate the content on the first load. If you want to take it up a notch, feel free to build this as a full-stack CRUD application!
-
-Your users should be able to:
+Users should be able to:
 
 - View the optimal layout for the app depending on their device's screen size
 - See hover states for all interactive elements on the page
@@ -27,93 +32,130 @@ Your users should be able to:
 - **Bonus**: If you're building a purely front-end project, use `localStorage` to save the current state in the browser that persists when the browser is refreshed.
 - **Bonus**: Instead of using the `createdAt` strings from the `data.json` file, try using timestamps and dynamically track the time since the comment or reply was posted.
 
-### Want some support on the challenge? 
+### Screenshot
 
-[Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+![](./screenshot.jpg)
 
-### Expected behaviour
+Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
 
-- First-level comments should be ordered by their score, whereas nested replies are ordered by time added.
-- Replying to a comment adds the new reply to the bottom of the nested replies within that comment.
-- A confirmation modal should pop up before a comment or reply is deleted.
-- Adding a new comment or reply uses the `currentUser` object from within the `data.json` file.
-- You can only edit or delete your own comments and replies.
+Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
 
-## Where to find everything
+Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
 
-Your task is to build out the project to the designs inside the `/design` folder. You will find both a mobile and a desktop version of the design.
+**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
 
-The designs are in JPG static format. Using JPGs will mean that you'll need to use your best judgment for styles such as `font-size`, `padding` and `margin`.
+### Links
 
-If you would like the Figma design file to inspect the design in more detail, you can [subscribe as a PRO member](https://www.frontendmentor.io/pro).
+- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
 
-You will find all the required assets in the `/images` folder. The assets are already optimized.
+## My process
 
-There is also a `style-guide.md` file containing the information you'll need, such as color palette and fonts.
+## Frontend functionality
 
-## Using AI coding assistants
+1. The planning has taken a lot from me, not knowing how to start. The sstructure of the json file complicates things quite a bit with main user seperated from the comments but I can see how I could have used that if I had auth but still it is the blue print container of the entire comment section.
+2. For now I will just build a stati site which will look like the the given one then I will see if I will do the functionality on it first or if I will connecct to db first then work on the funtionality.
+- So far I am loadng static data but I will see if it wll not give me problems when I fetch it from db (async and fetch will be my goto)
+3. So i designed the forms for the comment and reply
+- The design was not as simple as it looks and still needs tweaking
+- I also have trouble on where to put the forms but I have decided that they will go on every element just hidden whereby I was making it a a sibling of the component instead as a child of individual component
+4. The adding of reply and comment. I wanted to add a comment, initially you know since you have an array you use a push property. Though this needs to add an object to the array but I don't want to change the original one meaning I have to spread the array and add.
+So my solution was to just set the data to the on submit function of both forms only to realise this is not the correct approach.
+- I think the solution is to move everything on the submit to the contextt and turn it into a fucntion whereby i will call any which one I require. 
+# Will complete later
+5. Voter component. Initially I cheated by making a state which gets the score from the the components and changes the value. What I noticed is that the value only changes on the ui but not the component. I figured i needed to change the post
+# Note to self, choosing to work with nested data is not ideal, next time I will rather make states for the nested data and look for a way to sync the data. As I am struggling now, I don't know what I am going to do when it comes to working with the backend.
+- I thought of making a component which accepts the type off component and it wll conditionally render the reply or comment voter function, then I would go on to try and add whether it is increaing or decreasing to add to the function to also conditionally render the button interactivity function.
+- I was having too many error whereby I decded to spliit the the reply and comment vote components. A little( by a little I mean trial and error) tweaking and I got the buttons to work.
+6. Adding comment and reply funcionality.
+- I initially i had an add comment and add reply on their respectivve component but on trying it out I realised that it is not functioning the way I intended, where the reply function had to be used on both components with the comment used on the add comment form only
+- A minor bottleneck was that I used the same reply function on comment and reply component and it didn't work as expected and had to tweak it for replies.
+- FOr the whole day I am working on removing duplicate username on form, still no solution. Tried on the component side nothing, now I am working on the form side but still o luck. I am starting to get the feeling it has somethig to do with the decorator. My guess got me close, I was working with data not considering the decorator
+- The way to solve the issue was to put the username into a variable since it did not allow m to use decorators but then I used the variable as a conditional and it works.
+7. Now I will attempt to edit a text. I wil take the same route i did with deletion just I have to work on getting the text in order to play around with.
+8. I just worked on the time format...after many attempts I failed to make it update buti was assisted by AI and it works.
+- I started with creating a form that will aooear when you click edit, then the styingchange and ui, next is the data manipulation.
+- The updates work. I thought of making a new object and leaving the objects as is. Then I thought, what if I just take the item where I map and edit the text? will that not work, ad it did.
+- I had to tweak the function for editing the replies and good.
+9. One last thing for front end is is to change the action buttons on the ui but their functionality is perfect.
+10. I think that is it, the front end is complete, eveerything working.
+11. Forgot the delete confirmation.
+- Delete confirmation was not as easy as I thought. Identifying where to put it since nitially I put it on home page thinking it would be easy to access globally but then upon design I saw that it needed an id for deleltion so I had to move it to the components which owned the function and made that button pop up the modal while the delete function was moved to the delete confirmation component.
 
-We've included two files to help you if you're using AI coding assistants (like Claude, GitHub Copilot, Cursor, etc.) while working on this challenge:
+## Backend functionality
+1. This is where the fun begins. Will have to see where I start with db, models, api and all backend stuff and if it will be able to work in conjunction with backend.
+ 
 
-- `AGENTS.md` - Contains detailed instructions for AI assistants on how to help you with this challenge. It's tailored to this challenge's difficulty level, so the AI will provide guidance appropriate to your learning stage—offering more support for beginner challenges and encouraging more independence on advanced ones.
-- `CLAUDE.md` - A pointer file that directs Claude-based tools to the AGENTS.md instructions.
+### Built with
 
-**How to use them:** You don't need to do anything! These files are automatically detected by most AI coding tools. The AI will read them and adjust its behavior to be a better learning partner—guiding you toward solutions rather than just giving you the answers.
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- CSS Grid
+- Mobile-first workflow
+- [React](https://reactjs.org/) - JS library
+- [Next.js](https://nextjs.org/) - React framework
+- [Styled Components](https://styled-components.com/) - For styles
 
-**Note:** These files are designed to help you *learn*, not to do the work for you. The AI is instructed to ask questions, give hints, and explain concepts rather than writing complete solutions.
+**Note: These are just examples. Delete this note and replace the list above with your own choices**
 
-## Building your project
+### What I learned
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
 
-1. Initialize your project as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/).
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+To see how you can add code snippets, see below:
 
-## Deploying your project
+```html
+<h1>Some HTML code I'm proud of</h1>
+```
+```css
+.proud-of-this-css {
+  color: papayawhip;
+}
+```
+```js
+const proudOfThisFunc = () => {
+  console.log('🎉')
+}
+```
 
-As mentioned above, there are many ways to host your project for free. Our recommended hosts are:
+If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
 
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
+**Note: Delete this note and the content within this section and replace with your own learnings.**
 
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://www.frontendmentor.io/guides/hosting-your-solution).
+### Continued development
 
-## Create a custom `README.md`
+Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
 
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
+**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
 
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
+### Useful resources
 
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
+- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
+- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
 
-## Submitting your solution
+**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
 
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://www.frontendmentor.io/guides/how-to-submit-solutions) for tips on how to do this.
+### AI Collaboration
 
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
+Describe how you used AI tools (if any) during this project. This helps demonstrate your ability to work effectively with AI assistants.
 
-## Sharing your solution
+- What tools did you use (e.g., ChatGPT, Claude, GitHub Copilot)?
+- How did you use them (e.g., debugging, generating boilerplate, brainstorming solutions)?
+- What worked well? What didn't?
 
-There are multiple places you can share your solution:
+**Note: Delete this note and the content above if you didn't use AI, or replace with your own experience.**
 
-1. Share your solution page in the **#finished-projects** channel of the [community](https://www.frontendmentor.io/community).
-2. Share on [X (formerly Twitter)](https://x.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in your post. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on [LinkedIn](https://www.linkedin.com/company/frontend-mentor/).
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
+## Author
 
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback.
+- Website - [Add your name here](https://www.your-site.com)
+- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
+- Twitter - [@yourusername](https://www.twitter.com/yourusername)
 
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
+**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
 
-## Got feedback for us?
+## Acknowledgments
 
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
+This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
 
-This challenge is completely free. Please share it with anyone who will find it useful for practice.
-
-**Have fun building!** 🚀
+**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**

@@ -10,6 +10,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { useComments } from '@/context/CommentsContext';
 import ReplyVote from './ReplyVote';
 import EditComponent from './EditComponent';
+import ConfirmDelete from './ConfirmDelete';
 
 
 
@@ -21,7 +22,7 @@ const Reply = ({ reply, user, comment }) => {
     const username = reply?.user.username;
     const currentUser = user.username === username;
 
-    const { deleteReply } = useComments()
+    const { deleteReply, showDelete, setShowDelete } = useComments()
 
     const [now, setNow] = useState(Date.now());
 
@@ -42,7 +43,7 @@ const Reply = ({ reply, user, comment }) => {
 
     const isNewReply = reply?.isNew ?? false;
 
-    console.log(isNewReply);
+    // console.log(isNewReply);
 
     const [replyInput, setReplyInput] = useState(false)
     const [edit, setEdit] = useState(false)
@@ -57,6 +58,10 @@ const Reply = ({ reply, user, comment }) => {
         setEdit(!edit)
     }
 
+    const onDelete = () => {
+
+    }
+
     const rep = reply.replyingTo
 
     // console.log(`rest: ${rest},
@@ -64,7 +69,8 @@ const Reply = ({ reply, user, comment }) => {
     //     `);
 
     return (
-        <>
+        <div className='relative'>
+            {showDelete && <ConfirmDelete id={reply.id} type='re' />}
             <div className='flex flex-col gap-4 mb-4'>
                 <div className='w-full h-full md:min-h-42 flex md:gap-10'>
                     <div className='hidden h-full md:block md:ml-10 w-1 bg-[#E9EBF0]'></div>
@@ -95,7 +101,7 @@ const Reply = ({ reply, user, comment }) => {
                             {isNewReply ?
                                 (<div className='flex items-center gap-6'>
                                     <button
-                                        onClick={() => deleteReply(reply.id)}
+                                        onClick={() => setShowDelete(true)}
                                         className='text-pri-red hover:text-pri-red/50 flex justify-self-end md:row-start-1 items-center gap-2 cursor-pointer'>
                                         <FaTrash className='text-[14px]' />
                                         <span className='text-[16px] leading-[150%] tracking-normal font-medium'>Delete</span>
@@ -125,7 +131,7 @@ const Reply = ({ reply, user, comment }) => {
                 </div>
                 {replyInput && <ReplyForm btnLabel="reply" user={user} reply={reply} comment={comment} onReply={setReplyInput} />}
             </div>
-        </>
+        </div>
     )
 }
 

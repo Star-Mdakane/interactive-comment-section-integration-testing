@@ -3,6 +3,7 @@
 import Comment from "@/components/Comment";
 import AddCommentForm from "@/components/AddCommentForm";
 import { useComments } from "@/context/CommentsContext";
+import ConfirmDelete from "@/components/ConfirmDelete";
 
 export default function Home() {
 
@@ -14,8 +15,6 @@ export default function Home() {
   // console.log(userName);
 
   return (
-
-
     <div className="w-86 md:w-171 lg:w-182 mx-auto flex flex-col">
       {comments.map(comment => (
         <Comment key={comment.id} comment={comment} user={currentUser} replies={comment.replies ?? []} />

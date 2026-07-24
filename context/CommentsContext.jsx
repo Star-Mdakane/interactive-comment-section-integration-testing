@@ -15,6 +15,7 @@ export const useComments = () => {
 export const CommentsProvider = ({ children }) => {
 
     const [post, setPost] = useState(data)
+    const [showDelete, setShowDelete] = useState(false)
 
     const comments = post.comments ?? []
 
@@ -239,7 +240,7 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
-    console.log(comments);
+    // console.log(comments);
 
     const value = {
         setPost,
@@ -252,7 +253,9 @@ export const CommentsProvider = ({ children }) => {
         addComment,
         addReply,
         addReplyTo,
-        editComment
+        editComment,
+        showDelete,
+        setShowDelete,
     }
 
     return (
